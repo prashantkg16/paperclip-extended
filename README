@@ -26,4 +26,4 @@ The commands parameter is optional, also you can define it only for certain styl
 
 Read ImageMagick Command Line Options documentation for information on what can be put in commands parameter (http://www.imagemagick.org/script/command-line-options.php).
 
-Copyright (c) 2008 Michal Szajbe (http://codetunes.com), released under the MIT license
+Copyright (c) 2008 Michal Szajbe (http://codetunes.com) and netguru (http://netguru.pl), released under the MIT license
