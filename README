@@ -1,0 +1,29 @@
+=PaperclipExtended
+
+PaperclipExtended extends Paperclip plugin by Jon Yurek and thoughtbot. It enables user to define additional options that will be passed to ImageMagick convert command after thumbnail generation by Paperclip.
+
+Note that PaperclipExtended plugin is not a replacement for Paperclip. It requires that you have Paperclip plugin already installed.
+
+PaperclipExtended is known to work with Paperclip 2.1.2 (current version at the time of development). Note that extensions provided by PaperclipExtended may be included in Paperclip in future, so this plugin will not be needed anymore.
+
+==Usage
+
+In your model:
+
+  class User < ActiveRecord::Base
+    has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :commands => { :medium => "-background white -gravity center -extent 300x300 +repage" }
+  end
+  
+The string you pass in commands hash will be attached to convert command after usual thumbnail generation by Paperclip. 
+
+The result convert command will be now:  
+convert -scale "300x300>" -background white -gravity center -extent 300x300 +repage
+
+Instead of just:
+convert -scale "300x300>"
+
+The commands parameter is optional, also you can define it only for certain styles as above.
+
+Read ImageMagick Command Line Options documentation for information on what can be put in commands parameter (http://www.imagemagick.org/script/command-line-options.php).
+
+Copyright (c) 2008 Michal Szajbe (http://codetunes.com), released under the MIT license
