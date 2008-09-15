@@ -1,6 +1,6 @@
 =PaperclipExtended
 
-PaperclipExtended extends Paperclip plugin by Jon Yurek and thoughtbot. It add some possibly useful functionalities that original plugin lacks.
+PaperclipExtended extends Paperclip plugin by Jon Yurek and thoughtbot. It adds some possibly useful functionalities that original plugin lacks.
 
 Note that PaperclipExtended plugin is not a replacement for Paperclip. It requires that you have Paperclip plugin already installed.
 
@@ -47,7 +47,7 @@ In your model:
                       :url => "/avatars/:id/:normalized_basename_:style.:extension"
   end
   
-:normalized_basename works just like :basename, the only difference is that file's base name is normalized by substituting unusual chars with underscores. By "unusual characters" are those that are not matched by /[A-Za-z0-9_-]/ regular expression. For example if "my avatar.jpg" file is uploaded it's normalized basename would be "my_avatar.jpg". Such normalization may be useful in situations where you normally would url_encode the filename or something like that.
+:normalized_basename works just like :basename, the only difference is that file's basename is normalized by substituting unusual chars with underscores. By "unusual characters" are those that are not matched by /[A-Za-z0-9_-]/ regular expression. For example if "my avatar.jpg" file is uploaded it's normalized basename would be "my_avatar.jpg". Such normalization may be useful in situations where you normally would url_encode the filename or something like that.
 
 
 
