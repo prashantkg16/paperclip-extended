@@ -13,10 +13,7 @@ module Paperclip
     end
     
     def self.normalize_basename filename
-      name, ext = File.basename(filename, File.extname(filename)), File.extname(filename)
-      normalized = name.gsub(/[^A-Za-z0-9_-]/, '_')
-      normalized = 'filename' if normalized.empty?
-      normalized + ext
+      filename.gsub(/[^A-Za-z0-9_-]/, '_')
     end
   end
 end
