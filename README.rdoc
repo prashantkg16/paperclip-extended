@@ -14,6 +14,9 @@ PaperclipExtended is known to work with Paperclip 2.1.2 (current version at the 
 * File name normalization
   You can use :normalized_basename string in attachment's :path or :url definition, which is later interpolated. It works just like :basename, but it is normalized by substituting unusual characters with underscores.
 
+* Multiple S3 buckets
+  Enables you to upload attachments to different S3 buckets. Modern web browsers are limited to download 2-4 files from one host at the same time, so placing your files in 4 different buckets (hosts) will let browsers download 8-16 files simultaneously.
+
 ==Usage
 
 ===Custom commands
@@ -49,6 +52,28 @@ In your model:
   
 :normalized_basename works just like :basename, the only difference is that file's basename is normalized by substituting unusual chars with underscores. By "unusual characters" are those that are not matched by /[A-Za-z0-9_-]/ regular expression. For example if "my avatar.jpg" file is uploaded it's normalized basename would be "my_avatar.jpg". Such normalization may be useful in situations where you normally would url_encode the filename or something like that.
 
+===Multiple S3 buckets
 
+Modern web browsers are limited to download 2-4 files from one host at the same time, so placing your files in 4 different buckets (hosts) will let browsers download 8-16 files simultaneously.
+
+In your model:
+  class User < ActiveRecord::Base
+    has_attached_file :avatar,
+                      :storage => :s3,
+                      :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+                      :path => "avatars/:id/:style_:extension",
+                      :bucket => lambda do |attachment|
+                        i = attachment.instance.id % 4
+                        "bucket_#{i}"
+                      end
+  end
+
+This will place each avatar in one of four buckets: bucket_0, bucket_1, bucket_2 or bucket_3. The exact bucket is chosen at runtime and in this case it's based on models id.
+
+Getting attachment's path:
+puts User.find(1).avatar.url(:original)
+# => http://bucket_1.s3.amazonaws.com/avatars/1/original.jpg
+
+If your attachments are images and you display many of them on the same page, now you should see them loading much faster.
 
 Copyright (c) 2008 Michal Szajbe (http://codetunes.com) and netguru (http://netguru.pl), released under the MIT license
